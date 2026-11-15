@@ -172,3 +172,23 @@ tr.com-aviso td { background: #fffaeb; }
 .avisos-linha { white-space: normal !important; color: #93370d; font-size: 0.8rem; min-width: 220px; }
 .texto-aviso { color: #b54708; font-weight: 600; }
 .detalhe-import { background: #fafbfc; white-space: normal !important; line-height: 1.6; }
+
+/* Entrada / contas */
+.ecra-entrada { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; background: linear-gradient(160deg, #14261c 0%, #1f6f43 100%); }
+.cartao-entrada { background: var(--superficie); border-radius: 12px; padding: 2rem; width: min(420px, 100%); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+.form-entrada { display: flex; flex-direction: column; gap: 0.85rem; }
+.form-entrada h1 { margin-bottom: 0; }
+.form-entrada button.primario { padding: 0.6rem; font-size: 1rem; }
+.pequeno { font-size: 0.8rem; }
+.rodape-lateral { margin-top: auto; display: flex; flex-direction: column; gap: 0.5rem; }
+.rodape-lateral .versao { margin-top: 0; }
+.utilizador { background: #1f3a2b; border: 0; color: #e8efe9; text-align: left; display: flex; flex-direction: column; padding: 0.55rem 0.7rem; border-radius: 6px; }
+.utilizador span { color: #9db3a4; font-size: 0.78rem; }
+.utilizador.ativo, .utilizador:hover { background: var(--primaria); }
+.sync { font-size: 0.78rem; padding: 0.35rem 0.6rem; border-radius: 6px; }
+.sync-guardado { color: #9db3a4; }
+.sync-pendente, .sync-a_guardar { color: #fde68a; }
+.sync-erro { color: #fff; background: var(--perigo); }
+.sync-erro .sync-erro, .sync .sync-erro { font-size: 0.72rem; opacity: 0.9; margin-top: 2px; }
+.passos { margin: 0 0 0.5rem; padding-left: 1.2rem; line-height: 1.7; }
+.titulo-seccao { margin-top: 1.5rem; }

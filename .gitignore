@@ -1,2 +1,5 @@
 node_modules
 dist
+dist-local
+dist-falso
+.env.local

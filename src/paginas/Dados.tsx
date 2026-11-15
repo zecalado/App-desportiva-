@@ -9,13 +9,14 @@ import type { TipoCompeticao } from '../types';
 import { baseDadosVazia, novoId } from '../types';
 
 export function Dados() {
-  const { db, alterar, substituir } = useDados();
+  const { db, alterar, substituir, modo, verClinicos, eAdmin } = useDados();
+  const online = modo !== 'local';
   const ficheiro = useRef<HTMLInputElement>(null);
   const [clinicos, setClinicos] = useState(false);
   const [importar, setImportar] = useState<null | 'plantel' | 'jogos' | 'treinos'>(null);
 
   const exportarJson = () => {
-    const blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify({ ...db, incluiClinicos: verClinicos }, null, 2)], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     const d = new Date().toISOString().slice(0, 10);
@@ -26,8 +27,16 @@ export function Dados() {
 
   const importarJson = async (f: File) => {
     try {
-      const novo = validarBaseDados(JSON.parse(await f.text()));
+      const bruto = JSON.parse(await f.text());
+      const novo = validarBaseDados(bruto);
       if (!confirm('Substituir TODOS os dados atuais pelos do ficheiro?')) return;
+      // Cópia feita por um perfil sem acesso a dados clínicos: mantém os existentes
+      if (bruto.incluiClinicos === false || !verClinicos)
+        novo.jogadores = novo.jogadores.map((j) => ({
+          ...j,
+          clinico: db.jogadores.find((x) => x.id === j.id)?.clinico ?? j.clinico,
+        }));
+      delete (novo as { incluiClinicos?: boolean }).incluiClinicos;
       substituir(novo);
     } catch (e) {
       alert((e as Error).message || 'Ficheiro inválido.');
@@ -169,10 +178,12 @@ export function Dados() {
           <button className="primario" onClick={() => exportarExcel(db, clinicos).catch((e) => alert('Erro ao exportar: ' + (e as Error).message))}>
             Exportar registos para Excel
           </button>{' '}
-          <label className="check">
-            <input type="checkbox" checked={clinicos} onChange={(e) => setClinicos(e.target.checked)} />
-            Incluir dados clínicos
-          </label>
+          {verClinicos && (
+            <label className="check">
+              <input type="checkbox" checked={clinicos} onChange={(e) => setClinicos(e.target.checked)} />
+              Incluir dados clínicos
+            </label>
+          )}
         </p>
         <p className="sub">
           Gera Registo Geral, totais por jogador (geral e por competição), Disciplina, Jogos, Convocatórias, Eventos e
@@ -182,13 +193,23 @@ export function Dados() {
 
       <fieldset>
         <legend>Cópia de segurança</legend>
-        <p className="aviso">
-          Nesta versão de teste os dados ficam guardados <strong>apenas neste browser, neste computador</strong>.
-          Limpar os dados do browser apaga-os. Faça cópias de segurança regularmente.
-        </p>
+        {online ? (
+          <p className="sub">
+            Os dados estão guardados no servidor e são partilhados pela equipa técnica. Mesmo assim, descarregue uma
+            cópia de segurança com regularidade (por exemplo, uma vez por semana): o plano gratuito do servidor não
+            garante cópias automáticas. A cópia contém apenas o que o seu perfil pode ver.
+          </p>
+        ) : (
+          <p className="aviso">
+            Nesta versão de teste os dados ficam guardados <strong>apenas neste browser, neste computador</strong>.
+            Limpar os dados do browser apaga-os. Faça cópias de segurança regularmente.
+          </p>
+        )}
         <p>
           <button onClick={exportarJson}>Descarregar cópia de segurança</button>{' '}
-          <button onClick={() => ficheiro.current?.click()}>Restaurar cópia de segurança…</button>
+          {(!online || eAdmin) && (
+            <button onClick={() => ficheiro.current?.click()}>Restaurar cópia de segurança…</button>
+          )}
           <input
             ref={ficheiro}
             type="file"
@@ -203,6 +224,7 @@ export function Dados() {
         </p>
       </fieldset>
 
+      {!online && (
       <fieldset>
         <legend>Dados de exemplo</legend>
         <p>
@@ -231,6 +253,23 @@ export function Dados() {
           amarelo, jogadores castigados e lesionados.
         </p>
       </fieldset>
+      )}
+      {online && eAdmin && (
+        <fieldset>
+          <legend>Zona de perigo</legend>
+          <button
+            className="perigo"
+            onClick={() => {
+              if (!confirm('Apagar TODOS os dados do servidor (plantel, jogos, treinos) para toda a equipa? Esta ação não pode ser desfeita.')) return;
+              if (prompt('Para confirmar, escreva APAGAR') !== 'APAGAR') return;
+              substituir(baseDadosVazia());
+            }}
+          >
+            Apagar todos os dados
+          </button>
+          <p className="sub">Só administradores. Descarregue antes uma cópia de segurança.</p>
+        </fieldset>
+      )}
     </section>
   );
 }

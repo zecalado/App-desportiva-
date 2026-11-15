@@ -1,7 +1,7 @@
 // Modelo de dados. Cada facto é guardado uma só vez; totais, idades, minutos
 // e acumulações de cartões são sempre calculados (ver calc.ts).
 // Estas estruturas correspondem às tabelas previstas para a versão com servidor
-// (ver docs/schema.sql).
+// (ver supabase/schema.sql; cada registo é guardado como JSON na tabela respetiva).
 
 export const POSICOES = [
   'Guarda-Redes',

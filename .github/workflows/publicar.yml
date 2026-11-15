@@ -1,0 +1,46 @@
+# Publica a versão online no GitHub Pages sempre que há alterações no ramo main.
+name: Publicar
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Testes
+        run: npm test
+      - name: Verificar configuração do Supabase
+        run: |
+          if ! grep -q '^VITE_SUPABASE_URL=https://' .env.production 2>/dev/null; then
+            echo "::error::Falta configurar o Supabase no ficheiro .env.production (ver CONFIGURAR.md, passo 6)."
+            exit 1
+          fi
+      - name: Compilar
+        run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deploy
+        uses: actions/deploy-pages@v4

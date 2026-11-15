@@ -123,6 +123,7 @@ function FichaJogador(props: {
   onCancelar: () => void;
   onApagar: () => void;
 }) {
+  const { verClinicos } = useDados();
   const [j, setJ] = useState<Jogador>(props.inicial);
   const set = <K extends keyof Jogador>(k: K, v: Jogador[K]) => setJ({ ...j, [k]: v });
   const setClin = (k: keyof Jogador['clinico'], v: string) => setJ({ ...j, clinico: { ...j.clinico, [k]: v } });
@@ -220,10 +221,11 @@ function FichaJogador(props: {
           </div>
         </fieldset>
 
+        {verClinicos && (
         <fieldset className="sensivel">
           <legend>Dados clínicos — informação sensível</legend>
           <p className="sub">
-            Dados de saúde (RGPD, art. 9.º). Na versão com servidor, só os perfis autorizados os poderão ver.
+            Dados de saúde (RGPD, art. 9.º). Visíveis apenas para os perfis Administrador e Médico / Fisioterapia.
           </p>
           <div className="grelha">
             <label className="largo">
@@ -247,6 +249,7 @@ function FichaJogador(props: {
             </label>
           </div>
         </fieldset>
+        )}
 
         {erros.length > 0 && (
           <div className="erro">

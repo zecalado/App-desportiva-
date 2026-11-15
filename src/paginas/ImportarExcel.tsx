@@ -7,7 +7,7 @@ import { NOMES_CAMPO, aplicarImportacao, detetarCabecalho, lerExcel, mapearColun
 const CAMPOS_CLINICOS: Campo[] = ['cirurgias', 'lesoesAnteriores', 'alergias', 'restricoesAlimentares'];
 
 export function ImportarExcel({ fechar }: { fechar: () => void }) {
-  const { db, alterar } = useDados();
+  const { db, alterar, verClinicos } = useDados();
   const [folhas, setFolhas] = useState<Folha[] | null>(null);
   const [nomeFicheiro, setNomeFicheiro] = useState('');
   const [erro, setErro] = useState('');
@@ -15,7 +15,7 @@ export function ImportarExcel({ fechar }: { fechar: () => void }) {
   const [idxFolha, setIdxFolha] = useState(0);
   const [idxCab, setIdxCab] = useState(-1);
   const [mapa, setMapa] = useState<(Campo | null)[]>([]);
-  const [clinicos, setClinicos] = useState(true);
+  const [clinicos, setClinicos] = useState(verClinicos);
 
   const escolherFolha = (fs: Folha[], i: number) => {
     setIdxFolha(i);
@@ -161,7 +161,10 @@ export function ImportarExcel({ fechar }: { fechar: () => void }) {
               )}
             </div>
             {!mapa.includes('nome') && <div className="erro">É obrigatório indicar a coluna do Nome.</div>}
-            {temClinicos && (
+            {temClinicos && !verClinicos && (
+              <p className="sub">As colunas de dados clínicos são ignoradas: o seu perfil não tem acesso a dados clínicos.</p>
+            )}
+            {temClinicos && verClinicos && (
               <label className="check aviso-clinico">
                 <input type="checkbox" checked={clinicos} onChange={(e) => setClinicos(e.target.checked)} />
                 Importar também os dados clínicos (informação de saúde sensível)

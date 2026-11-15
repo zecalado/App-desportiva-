@@ -6,9 +6,13 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "test": "vitest run"
+    "test": "vitest run",
+    "build:local": "vite build --mode offline && cp dist-local/index.html GestaoPlantel.html",
+    "dev:falso": "VITE_SERVIDOR=falso vite",
+    "build:falso": "VITE_SERVIDOR=falso vite build --outDir dist-falso"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.119.0",
     "exceljs": "^4.4.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
