@@ -22,7 +22,7 @@ Assim só o administrador cria contas.
 
 ## 4. Endereço da aplicação
 **Authentication → URL Configuration**:
-- **Site URL:** `https://zecalado.github.io/app-desportiva-/`
+- **Site URL:** `https://zecalado.github.io/App-desportiva-/`
 - **Redirect URLs:** adicionar o mesmo endereço.
 
 ## 5. Criar a sua conta (fica administrador)
@@ -46,7 +46,7 @@ VITE_SUPABASE_ANON_KEY=sb_publishable_xxxxxxxxxxxx
 ## 7. Ativar o GitHub Pages
 No repositório: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 A partir daí, cada alteração enviada para `main` é testada e publicada automaticamente em
-<https://zecalado.github.io/app-desportiva-/> (separador **Actions** mostra o progresso).
+<https://zecalado.github.io/App-desportiva-/> (separador **Actions** mostra o progresso).
 
 ## 8. Adicionar a equipa técnica
 Para cada pessoa:

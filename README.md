@@ -1,7 +1,7 @@
 # Gestão de Plantel — Séniores
 
 Duas formas de utilização:
-- **Versão online** (equipa técnica, com contas e perfis): <https://zecalado.github.io/app-desportiva-/> — configuração em [CONFIGURAR.md](CONFIGURAR.md).
+- **Versão online** (equipa técnica, com contas e perfis): <https://zecalado.github.io/App-desportiva-/> — configuração em [CONFIGURAR.md](CONFIGURAR.md).
 - **Protótipo local** (`GestaoPlantel.html`): um único ficheiro, dados guardados só no browser.
 
 
