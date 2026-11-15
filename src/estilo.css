@@ -1,0 +1,174 @@
+:root {
+  --fundo: #f5f6f8;
+  --superficie: #ffffff;
+  --texto: #1d2330;
+  --suave: #667085;
+  --linha: #e3e6eb;
+  --primaria: #1f6f43;
+  --primaria-escura: #17573a;
+  --perigo: #b42318;
+  --aviso-fundo: #fff7e6;
+  --aviso-linha: #f2c46d;
+  --amarelo: #f5c400;
+  --vermelho: #d92d20;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  color: var(--texto);
+  background: var(--fundo);
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+h1 { font-size: 1.45rem; margin: 0.15rem 0; }
+h2 { font-size: 1.2rem; margin: 0 0 0.75rem; }
+
+.app { display: flex; min-height: 100vh; }
+.lateral {
+  width: 200px; flex-shrink: 0; background: #14261c; color: #e8efe9;
+  display: flex; flex-direction: column; padding: 1rem 0.6rem; position: sticky; top: 0; height: 100vh;
+}
+.marca-app { padding: 0 0.5rem 1rem; display: flex; flex-direction: column; gap: 2px; }
+.marca-app span { color: #9db3a4; font-size: 0.85rem; }
+.lateral nav { display: flex; flex-direction: column; gap: 2px; }
+.lateral nav button {
+  background: none; border: 0; color: inherit; text-align: left; padding: 0.55rem 0.7rem;
+  border-radius: 6px; font-size: 0.95rem; cursor: pointer;
+}
+.lateral nav button:hover { background: #1f3a2b; }
+.lateral nav button.ativo { background: var(--primaria); font-weight: 600; }
+.versao { margin-top: auto; font-size: 0.75rem; color: #8aa293; padding: 0 0.5rem; }
+.conteudo { flex: 1; padding: 1.25rem 1.75rem 3rem; min-width: 0; }
+
+.cabecalho { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.acoes { display: flex; gap: 0.75rem; align-items: center; }
+.sub { color: var(--suave); }
+.vazio { color: var(--suave); padding: 2rem; text-align: center; background: var(--superficie); border: 1px dashed var(--linha); border-radius: 8px; }
+
+button {
+  font: inherit; padding: 0.42rem 0.85rem; border-radius: 6px; border: 1px solid var(--linha);
+  background: var(--superficie); cursor: pointer; color: var(--texto);
+}
+button:hover:not(:disabled) { border-color: #c4c9d1; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+button.primario { background: var(--primaria); border-color: var(--primaria); color: #fff; }
+button.primario:hover:not(:disabled) { background: var(--primaria-escura); }
+button.perigo { color: var(--perigo); }
+button.ligacao { border: 0; background: none; padding: 0; color: var(--primaria); }
+button.ligacao.perigo { color: var(--perigo); }
+
+input, select, textarea {
+  font: inherit; padding: 0.4rem 0.5rem; border: 1px solid #cfd4dc; border-radius: 6px; background: #fff; width: 100%;
+}
+textarea { min-height: 3.2rem; resize: vertical; }
+input.curto { width: 5rem; }
+input[type='checkbox'] { width: auto; }
+label { display: flex; flex-direction: column; gap: 0.25rem; font-size: 0.85rem; color: #344054; }
+label.check { flex-direction: row; align-items: center; gap: 0.4rem; }
+small { color: var(--suave); }
+
+fieldset { border: 1px solid var(--linha); border-radius: 8px; background: var(--superficie); padding: 0.75rem 1rem 1rem; margin: 0 0 1rem; }
+legend { font-weight: 600; padding: 0 0.35rem; }
+fieldset.sensivel { border-color: #f1b4ae; background: #fffafa; }
+.grelha { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.75rem; align-items: start; margin-bottom: 0.5rem; }
+.grelha .largo { grid-column: span 2; }
+
+.tabela { width: 100%; border-collapse: collapse; background: var(--superficie); border: 1px solid var(--linha); border-radius: 8px; }
+.tabela th, .tabela td { padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--linha); text-align: left; white-space: nowrap; }
+.tabela th { background: #f0f2f5; font-weight: 600; font-size: 0.82rem; color: #475467; position: sticky; top: 0; z-index: 1; }
+.tabela .num { text-align: right; font-variant-numeric: tabular-nums; }
+.tabela.clicavel tbody tr { cursor: pointer; }
+.tabela.clicavel tbody tr:hover, .tabela.compacta tbody tr:hover { background: #f6faf7; }
+.tabela.compacta th, .tabela.compacta td { padding: 0.35rem 0.5rem; }
+.tabela tr.inativo { opacity: 0.5; }
+.ordenavel { cursor: pointer; user-select: none; }
+.ordenado { color: var(--primaria) !important; text-decoration: underline; }
+.rolagem { overflow: auto; max-height: 75vh; border-radius: 8px; }
+
+.aviso { background: var(--aviso-fundo); border: 1px solid var(--aviso-linha); border-radius: 8px; padding: 0.6rem 0.9rem; margin-bottom: 1rem; }
+.aviso ul { margin: 0.3rem 0 0; padding-left: 1.2rem; }
+.erro { background: #fef3f2; border: 1px solid #fda29b; color: var(--perigo); border-radius: 8px; padding: 0.6rem 0.9rem; margin: 0.5rem 0; }
+
+.modal-fundo { position: fixed; inset: 0; background: rgba(16, 24, 40, 0.45); display: flex; justify-content: center; align-items: flex-start; padding: 3vh 1rem; overflow: auto; z-index: 10; }
+.modal { background: var(--fundo); border-radius: 10px; padding: 1.25rem; width: min(860px, 100%); box-shadow: 0 20px 50px rgba(0,0,0,0.25); }
+.rodape-modal { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+.espaco { flex: 1; }
+.etiquetas { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
+.etiqueta { padding: 0.2rem 0.6rem; border-radius: 99px; font-size: 0.8rem; }
+.etiqueta.ativa { background: var(--primaria); color: #fff; border-color: var(--primaria); }
+
+.separadores { display: flex; gap: 0.25rem; border-bottom: 1px solid var(--linha); margin-bottom: 1rem; }
+.separadores button { border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: none; padding: 0.55rem 0.9rem; color: var(--suave); }
+.separadores button.ativo { border-bottom-color: var(--primaria); color: var(--texto); font-weight: 600; }
+
+.formulario-evento { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end; background: var(--superficie); border: 1px solid var(--linha); border-radius: 8px; padding: 0.75rem 1rem; }
+.formulario-evento label { min-width: 150px; }
+.formulario-evento label.check { min-width: 0; padding-bottom: 0.45rem; }
+.marca { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 0.3rem; vertical-align: middle; }
+.ev-golo { background: var(--primaria); border-radius: 50%; }
+.ev-golo_adversario { background: #98a2b3; border-radius: 50%; }
+.ev-amarelo { background: var(--amarelo); width: 8px; height: 11px; }
+.ev-vermelho { background: var(--vermelho); width: 8px; height: 11px; }
+.ev-substituicao { background: #2e90fa; }
+
+.resultado { font-weight: 700; padding: 0.1rem 0.45rem; border-radius: 4px; }
+.vitoria { background: #dcfae6; color: #085d3a; }
+.derrota { background: #fee4e2; color: #912018; }
+.empate { background: #f2f4f7; color: #344054; }
+
+/* Convocatória */
+tr.sit-titular td { background: #f3fbf6; }
+tr.sit-suplente td { background: #f7f9fc; }
+tr.sit-lesionado td, tr.sit-doente td, tr.sit-castigado td, tr.sit-outro td { background: #fff8f0; }
+
+/* Treinos */
+.botoes-presenca { display: flex; gap: 0.3rem; align-items: center; }
+.botoes-presenca button { padding: 0.25rem 0.6rem; font-size: 0.82rem; }
+.botoes-presenca .pr-presente.ativo { background: #dcfae6; border-color: #47cd89; }
+.botoes-presenca .pr-falta.ativo { background: #fee4e2; border-color: #f97066; }
+.botoes-presenca .pr-lesionado.ativo { background: #d1e9ff; border-color: #53b1fd; }
+.botoes-presenca .pr-doente.ativo { background: #f4ebff; border-color: #b692f6; }
+
+/* Disciplina */
+.legenda { display: flex; flex-wrap: wrap; gap: 0.35rem 0.6rem; align-items: center; margin-bottom: 0.75rem; font-size: 0.82rem; color: var(--suave); }
+.legenda .cel { display: inline-block; padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.75rem; }
+.matriz td.cel { text-align: center; font-size: 0.75rem; font-weight: 600; }
+.cel.sit-titular { background: #dcfae6; color: #085d3a; }
+.cel.sit-suplente_utilizado { background: #e0f2fe; color: #065986; }
+.cel.sit-suplente_nao_utilizado { background: #f2f4f7; color: #475467; }
+.cel.sit-nao_convocado { color: #98a2b3; font-weight: 400 !important; }
+.cel.sit-lesionado { background: #d1e9ff; color: #1849a9; }
+.cel.sit-doente { background: #f4ebff; color: #6941c6; }
+.cel.sit-castigado, .cel.sit-outro { background: #fef0c7; color: #93370d; }
+.cartao { display: inline-block; width: 7px; height: 10px; border-radius: 1px; margin-left: 3px; vertical-align: -1px; }
+.cartao.amarelo { background: var(--amarelo); }
+.cartao.vermelho { background: var(--vermelho); }
+.matriz th.vertical { height: 150px; vertical-align: bottom; padding: 0.3rem 0.2rem; }
+.matriz th.vertical span { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; font-weight: 500; }
+td.alerta { background: #fdead7; font-weight: 700; }
+td.alerta-forte { background: #fee4e2; color: var(--perigo); font-weight: 700; }
+
+@media (max-width: 760px) {
+  .app { flex-direction: column; }
+  .lateral { width: auto; height: auto; position: static; }
+  .lateral nav { flex-direction: row; flex-wrap: wrap; }
+  .versao { display: none; }
+  .conteudo { padding: 1rem; }
+  .grelha .largo { grid-column: auto; }
+}
+
+.cabecalho select { width: auto; min-width: 220px; }
+.tabela.matriz { width: auto; }
+.tabela.matriz td.cel { min-width: 52px; }
+
+/* Importação */
+.modal.largo { width: min(1150px, 100%); }
+.mapa-colunas { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 0.6rem; }
+.cab-excel { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.8rem; color: #344054; background: #f2f4f7; padding: 0.1rem 0.35rem; border-radius: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.aviso-clinico { margin-top: 0.75rem; color: var(--perigo); }
+.rolagem.curta { max-height: 45vh; }
+.selo { font-size: 0.75rem; font-weight: 600; padding: 0.1rem 0.45rem; border-radius: 99px; }
+.selo.novo { background: #dcfae6; color: #085d3a; }
+.selo.atualizar { background: #e0f2fe; color: #065986; }
+tr.com-aviso td { background: #fffaeb; }
+.avisos-linha { white-space: normal !important; color: #93370d; font-size: 0.8rem; min-width: 220px; }
+.texto-aviso { color: #b54708; font-weight: 600; }
+.detalhe-import { background: #fafbfc; white-space: normal !important; line-height: 1.6; }
